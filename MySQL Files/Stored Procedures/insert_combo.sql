@@ -1,5 +1,5 @@
 CREATE DEFINER=`PythonDBUser`@`%` PROCEDURE `insert_combo`(gameV varchar(45),
-															 characterV varchar(45),
+															 char_nameV varchar(45),
 															 comboV varchar(1000), 
 															 positionV varchar(45), 
 															 damageV int, 
@@ -8,7 +8,7 @@ CREATE DEFINER=`PythonDBUser`@`%` PROCEDURE `insert_combo`(gameV varchar(45),
 															 notesV varchar(500)
 															 )
 BEGIN
-	IF gameV IS NULL OR characterV IS NULL OR comboV IS NULL THEN
+	IF gameV IS NULL OR char_nameV IS NULL OR comboV IS NULL THEN
 		SIGNAL SQLSTATE '22004'
 			SET MESSAGE_TEXT = 'Game name, character name, and combo must not be NULL';
     
@@ -17,7 +17,7 @@ BEGIN
         FROM combos
         WHERE
         game = gameV AND
-        `character` = characterV AND
+        char_name = char_nameV AND
         combo = comboV
         ) THEN
 			SIGNAL SQLSTATE'45000'
@@ -26,7 +26,7 @@ BEGIN
 		INSERT INTO combos
 					(combo_id,
 					 game,
-					 `character`,
+					 char_name,
 					 combo,
 					 position,
 					 damage,
@@ -35,7 +35,7 @@ BEGIN
 					 notes)
 		VALUES     ( DEFAULT,
 					 gameV,
-					 characterV,
+					 char_nameV,
 					 comboV,
 					 positionV,
 					 damageV,
