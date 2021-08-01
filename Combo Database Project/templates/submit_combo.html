@@ -16,35 +16,92 @@
         <h1>Submit a combo</h1>
         <hr>
         
-        <form action="/action_page.php">
+        <form action="/submit_combo" method="POST">
 
-            <label for="games">Select a game:</label>
+            <!-- <label for="games">Select a game:</label>
             <br>
             <select id="games" name="games">
               <option value="Guilty Gear -Strive-">Guilty Gear -Strive-</option>
               <option value="Street Fighter V">Street Fighter V</option>
             </select>
+ -->
 
             <br>
             <br>
-            <label for="fname">Character name:</label><br>
-            <input type="text" id="cname" name="cname"><br><br>
 
-            <label for="fname">Combo:</label><br>
-            <input type="text" id="combo" name="combo"><br><br>
+            <!-- Value dependent dropdowns
+            Reference: https://stackoverflow.com/questions/30232146/dynamically-populating-drop-down-list-from-selection-of-another-drop-down-value
+            -->
 
-            <label for="fname">Position:</label><br>
-            <input type="text" id="position" name="position"><br><br>
-
-            <label for="fname">Damage:</label><br>
-            <input type="text" id="damage" name="damage"><br><br>
-
-            <label for="fname">Meter:</label><br>
-            <input type="text" id="meter" name="meter"><br><br>
-
-            <label for="games">Difficulty:</label>
+            <label for="game">Select a game:</label>
             <br>
-            <select id="games" name="games">
+            <select name="gameSelected" id="gameSelected" onChange="changedrop(this.value);">
+              <option value="" disabled selected>Select a game</option>
+              <option value="Guilty Gear -Strive-">Guilty Gear -Strive-</option>
+              <option value="Street Fighter V">Street Fighter V</option>
+              <option value="Other">Other</option>
+          </select>
+          <br>
+          <br>
+          <label for="charSelected">Select a character:</label>
+          <br>
+          <select name="charSelected" id="charSelected">
+              <option value="" disabled selected>Must select a game first</option>
+          </select>
+
+
+            <script type="text/javascript">
+            var charsByCategory = {
+              "Guilty Gear -Strive-": ["Anji Mito","Axl Low","Chipp Zanuff","Faust",
+              "Giovanna","Goldlewis Dickinson","I-No","Ky Kiske","Leo Whitefang","May",
+              "Millia Rage","Nagoriyuki","Potemkin","Ramlethal Valentine","Sol Badguy","Zato-1"],
+                
+              "Street Fighter V": ["Abigail", "Akira", "Akuma", "Alex", "Balrog", "Birdie", "Blanka", "Cammy", 
+                "Chun-Li", "Cody", "Dan", "Dhalsim", "E. Honda", "Ed", "Eleven", "F.A.N.G", "Falke", "G", 
+                "Gill", "Guile", "Ibuki", "Juri", "Kage", "Karin", "Ken", "Kolin", "Laura", 
+                "Lucia", "M. Bison", "Menat", "Nash", "Necalli", "Oro", "Poison", "R. Mika", 
+                "Rashid", "Rose", "Ryu", "Sagat", "Sakura", "Seth", "Urien", "Vega", "Zangief", "Zeku"],
+              "Other": ["To be implemented soon"]
+          }
+
+    function changedrop(value) {
+        if (value.length == 0) document.getElementById("charSelected").innerHTML = "<option></option>";
+        else {
+            var catOptions = "";
+            for (categoryId in charsByCategory[value]) {
+                catOptions += "<option>" + charsByCategory[value][categoryId] + "</option>";
+            }
+            document.getElementById("charSelected").innerHTML = catOptions;
+        }
+    }
+            
+            </script>
+
+
+
+            <br>
+            <br>
+            <label for="Combo">Combo:</label><br>
+            <input type="text" id="Combo" name="Combo"><br><br>
+
+            <label for="Position">Position:</label><br>
+            <select id="Position" name="Position">
+              <option value="Anywhere">Anywhere</option>
+              <option value="Corner">Corner</option>
+              <option value="Air">Air</option>
+            </select> 
+            <br>
+            <br>
+
+            <label for="Damage">Damage:</label><br>
+            <input type="number" id="Damage" name="Damage" value = "0"><br><br>
+
+            <label for="Meter">Meter:</label><br>
+            <input type="number" id="Meter" name="Meter" value = "0"><br><br>
+
+            <label for="Difficulty">Difficulty:</label>
+            <br>
+            <select id="Difficulty" name="Difficulty">
               <option value="[1] Very Easy">[1] Very Easy</option>
               <option value="[2] Easy">[2] Easy</option>
               <option value="[3] Medium">[3] Medium</option>
@@ -53,8 +110,8 @@
             </select> 
             <br>
             <br>
-            <label for="fname">Notes:</label><br>
-            <input type="text" id="notes" name="notes"><br><br>
+            <label for="Notes">Notes:</label><br>
+            <input type="text" id="Notes" name="Notes"><br><br>
 
 
             <input type="submit" value="Submit">

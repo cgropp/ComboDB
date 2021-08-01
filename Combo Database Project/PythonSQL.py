@@ -5,19 +5,22 @@ dbconfig = {
 	'host': "localhost",    
 	'user': "PythonDBUser",         
 	'passwd': "PythonDBPass",  
-	'db': "sql_invoicing"
+	'db': "combo_db"
 }
 
 db = mysql.connector.connect(**dbconfig)
 
 #Call stored procedure
-def call_get_payments(client_id, payment_id):
+def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV):
 	try:
 		db = mysql.connector.connect(**dbconfig)
 		cursor = db.cursor()
 		
-		args = [client_id,payment_id]
-		result = cursor.callproc('get_payments', args)
+		args = [gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV]
+		result = cursor.callproc('insert_combo', args)
+		db.commit()
+
+		print(cursor.rowcount, "record inserted.")
 		
 		for result in cursor.stored_results():
 			print(result.fetchall())
@@ -29,7 +32,7 @@ def call_get_payments(client_id, payment_id):
 		cursor.close()
 		db.close()
 		
-call_get_payments(1,1)		
+#call_insert_combo('Guilty Gear -Strive-', 'Zato-1', 'CH 2S > 22H', 'Anywhere', -1, 0, '[1] Very Easy', 'Everyone except nago can jump out')		
 		
 		
 # testSelectQuery = "SELECT * FROM clients WHERE client_id > 1;"
