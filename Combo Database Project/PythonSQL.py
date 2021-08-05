@@ -11,7 +11,7 @@ dbconfig = {
 db = mysql.connector.connect(**dbconfig)
 
 #Call stored procedure
-def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV):
+def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV) -> str:
 	try:
 		db = mysql.connector.connect(**dbconfig)
 		cursor = db.cursor()
@@ -25,9 +25,18 @@ def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, dif
 		for result in cursor.stored_results():
 			print(result.fetchall())
 		
-	except Error as e:
+	except mysql.connector.Error as e:
+		#print(e)
+		#Test detailed error messages
+		# print ("Error code:", e.errno)        # error number
+		# print ("SQLSTATE value:", e.sqlstate) # SQLSTATE value
+		# print ("Error message:", e.msg)       # error message
+		# print ("Error:", e)                   # errno, sqlstate, msg values
+		# s = str(e)
+		# print ("Error:", s)                   # errno, sqlstate, msg values
+		return e.sqlstate
 		print(e)
-		
+
 	finally:
 		cursor.close()
 		db.close()

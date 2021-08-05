@@ -16,13 +16,6 @@
         
         <form action="/submit_combo" method="POST">
 
-            <!-- <label for="games">Select a game:</label>
-            <br>
-            <select id="games" name="games">
-              <option value="Guilty Gear -Strive-">Guilty Gear -Strive-</option>
-              <option value="Street Fighter V">Street Fighter V</option>
-            </select>
- -->
             <!-- Value dependent dropdowns
             Reference: https://stackoverflow.com/questions/30232146/dynamically-populating-drop-down-list-from-selection-of-another-drop-down-value
             -->
@@ -108,13 +101,16 @@
             <input type="text" id="Notes" name="Notes"><br><br>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-
-            <!-- <input type="submit" value="Submit"> -->
-            
-            <!-- {% if feedback %}
-            <p class="text-danger float-right">{{ feedback }}</p>
-            {% endif %} -->
-
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
           </form>
         
 

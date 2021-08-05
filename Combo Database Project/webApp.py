@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from PythonSQL import *
 app = Flask(__name__)
-
+app.secret_key = "BX\xbe\x0f\xbe\xc4@\xd8K\xd6P\xc7"
 
 @app.route('/')
 def testing():
@@ -23,13 +23,13 @@ def submit_combo():
 
         missing = list()
 
-        for k, v in req.items():
-            if v =="":
-                missing.append(k)
+        # for k, v in req.items():
+        #     if v =="":
+        #         missing.append(k)
         
-        if missing:
-            feedback = f"Missing fields for {'. '.join(missing)}"
-            return render_template("/submit_combo", feedback=feedback)
+        # if missing:
+        #     feedback = f"Missing fields for {'. '.join(missing)}"
+        #     return render_template("/submit_combo", feedback=feedback)
         
         #print(gameV)
         #print(comboV)
@@ -37,12 +37,14 @@ def submit_combo():
 
 
         if gameV != None and char_nameV != None and comboV != None:
-            call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV)		
-
-        #TODO: Else show user error message 
-
+            eCode = call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV)
+            #TODO: Else show user error message 		
+            if eCode == "45000":
+                print("DEBUG: error, already in database!")
+                flash('Combo already exists in database, please try submitting a different combo.')
+            else:
+                flash('Combo submitted to database.')
         return redirect(request.url)
-
     return render_template("submit_combo.html")
 
 
