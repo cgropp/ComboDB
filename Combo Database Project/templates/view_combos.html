@@ -5,16 +5,16 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>{% block title %}Combo Submission Page{% endblock %}</title>
+    <title>{% block title %}View combos{% endblock %}</title>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <h1>Submit a combo</h1>
+        <h1>View combos</h1>
         <hr>
         
-        <form action="/submit_combo" method="POST">
+        <form action="/view_combos" method="POST">
 
             <!-- Value dependent dropdowns
             Reference: https://stackoverflow.com/questions/30232146/dynamically-populating-drop-down-list-from-selection-of-another-drop-down-value
@@ -63,61 +63,20 @@
     }
             
             </script>
+    <br>
+
+<button type="submit" class="btn btn-primary">View combos</button>
 
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
 
-            <br>
-            <br>
-            <label for="Combo">Combo:</label><br>
-            <input type="text" id="Combo" name="Combo" required><br><br>
-
-            <label for="Position">Position:</label><br>
-            <select id="Position" name="Position">
-              <option value="Anywhere">Anywhere</option>
-              <option value="Corner">Corner</option>
-              <option value="Air">Air</option>
-            </select> 
-            <br>
-            <br>
-
-            <label for="Damage">Damage:</label><br>
-            <input type="number" id="Damage" name="Damage" value = "0" min="0"><br><br>
-
-            <label for="Meter">Meter:</label><br>
-            <input type="number" id="Meter" name="Meter" value = "0" min="0"><br><br>
-
-            <label for="Difficulty">Difficulty:</label>
-            <br>
-            <select id="Difficulty" name="Difficulty">
-              <option value="[1] Very Easy">[1] Very Easy</option>
-              <option value="[2] Easy">[2] Easy</option>
-              <option value="[3] Medium">[3] Medium</option>
-              <option value="[4] Hard">[4] Hard</option>
-              <option value="[5] Very Hard">[5] Very Hard</option>
-            </select> 
-            <br>
-            <br>
-            <label for="Notes">Notes:</label><br>
-            <input type="text" id="Notes" name="Notes"><br><br>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-            {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                  <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-              {% endif %}
-            {% endwith %}
-            {% block body %}{% endblock %}
-            
-          </form>
-        
-
-
-    </div>
-    
-    </body>
-</body>
-</html>
+</form>

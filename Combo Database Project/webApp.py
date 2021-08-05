@@ -21,7 +21,7 @@ def submit_combo():
         difficultyV = req.get("Difficulty")
         notesV = req.get("Notes")
 
-        missing = list()
+        #missing = list()
 
         # for k, v in req.items():
         #     if v =="":
@@ -46,6 +46,33 @@ def submit_combo():
                 flash('Combo submitted to database.')
         return redirect(request.url)
     return render_template("submit_combo.html")
+
+
+@app.route("/view_combos", methods=["GET", "POST"])
+def view_combos():
+    if request.method == "POST":
+        req = request.form
+        #print(req)
+        gameV = req.get("gameSelected")
+        char_nameV = req.get("charSelected")
+
+
+        if gameV != None and char_nameV != None:
+            eCode = call_select_char_combos(gameV, char_nameV)
+            #TODO: Else show user error message 		
+            if eCode == "45000":
+                print("DEBUG: Character has no combos")
+                flash('This character has no combos in the database.')
+            else:
+                flash('This character has combos in the database')
+        return redirect(request.url)
+    return render_template("/view_combos.html")
+
+
+
+
+
+
 
 
 @app.route('/test2')

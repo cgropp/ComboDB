@@ -8,7 +8,7 @@ dbconfig = {
 	'db': "combo_db"
 }
 
-db = mysql.connector.connect(**dbconfig)
+#db = mysql.connector.connect(**dbconfig)
 
 #Call stored procedure
 def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV) -> str:
@@ -41,7 +41,29 @@ def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, dif
 		cursor.close()
 		db.close()
 		
-#call_insert_combo('Guilty Gear -Strive-', 'Zato-1', 'CH 2S > 22H', 'Anywhere', -1, 0, '[1] Very Easy', 'Everyone except nago can jump out')		
+#Call stored procedure
+def call_select_char_combos(gameV, char_nameV) -> str:
+	try:
+		db = mysql.connector.connect(**dbconfig)
+		cursor = db.cursor()
+		
+		args = [gameV, char_nameV]
+		
+		result = cursor.callproc('select_char_combos', args)
+		
+		#TODO: Figure out how to get number of records 
+		#print(cursor[2].rowcount, "record(s) found.")
+		
+		for result in cursor.stored_results():
+			print(result.fetchall())
+		
+	except mysql.connector.Error as e:
+		return e.sqlstate
+		print(e)
+
+	finally:
+		cursor.close()
+		db.close()
 		
 		
 # testSelectQuery = "SELECT * FROM clients WHERE client_id > 1;"
