@@ -11,7 +11,7 @@ def testing():
 def submit_combo():
     if request.method == "POST":
         req = request.form
-        print(req)
+        #print(req)
         gameV = req.get("gameSelected")
         char_nameV = req.get("charSelected")
         comboV  = req.get("Combo")
@@ -21,8 +21,20 @@ def submit_combo():
         difficultyV = req.get("Difficulty")
         notesV = req.get("Notes")
 
-        print(gameV)
-        print(comboV)
+        missing = list()
+
+        for k, v in req.items():
+            if v =="":
+                missing.append(k)
+        
+        if missing:
+            feedback = f"Missing fields for {'. '.join(missing)}"
+            return render_template("/submit_combo", feedback=feedback)
+        
+        #print(gameV)
+        #print(comboV)
+        
+
 
         if gameV != None and char_nameV != None and comboV != None:
             call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, difficultyV, notesV)		

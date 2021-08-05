@@ -5,10 +5,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Combo Submission Page{% endblock %}</title>
 </head>
-
-
 
 <body>
 
@@ -25,17 +23,13 @@
               <option value="Street Fighter V">Street Fighter V</option>
             </select>
  -->
-
-            <br>
-            <br>
-
             <!-- Value dependent dropdowns
             Reference: https://stackoverflow.com/questions/30232146/dynamically-populating-drop-down-list-from-selection-of-another-drop-down-value
             -->
 
             <label for="game">Select a game:</label>
             <br>
-            <select name="gameSelected" id="gameSelected" onChange="changedrop(this.value);">
+            <select name="gameSelected" id="gameSelected" onChange="changedrop(this.value);" required>
               <option value="" disabled selected>Select a game</option>
               <option value="Guilty Gear -Strive-">Guilty Gear -Strive-</option>
               <option value="Street Fighter V">Street Fighter V</option>
@@ -45,7 +39,7 @@
           <br>
           <label for="charSelected">Select a character:</label>
           <br>
-          <select name="charSelected" id="charSelected">
+          <select name="charSelected" id="charSelected" required>
               <option value="" disabled selected>Must select a game first</option>
           </select>
 
@@ -61,7 +55,7 @@
                 "Gill", "Guile", "Ibuki", "Juri", "Kage", "Karin", "Ken", "Kolin", "Laura", 
                 "Lucia", "M. Bison", "Menat", "Nash", "Necalli", "Oro", "Poison", "R. Mika", 
                 "Rashid", "Rose", "Ryu", "Sagat", "Sakura", "Seth", "Urien", "Vega", "Zangief", "Zeku"],
-              "Other": ["To be implemented soon"]
+              "Other": ["More games to be added soon"]
           }
 
     function changedrop(value) {
@@ -82,7 +76,7 @@
             <br>
             <br>
             <label for="Combo">Combo:</label><br>
-            <input type="text" id="Combo" name="Combo"><br><br>
+            <input type="text" id="Combo" name="Combo" required><br><br>
 
             <label for="Position">Position:</label><br>
             <select id="Position" name="Position">
@@ -94,10 +88,10 @@
             <br>
 
             <label for="Damage">Damage:</label><br>
-            <input type="number" id="Damage" name="Damage" value = "0"><br><br>
+            <input type="number" id="Damage" name="Damage" value = "0" min="0"><br><br>
 
             <label for="Meter">Meter:</label><br>
-            <input type="number" id="Meter" name="Meter" value = "0"><br><br>
+            <input type="number" id="Meter" name="Meter" value = "0" min="0"><br><br>
 
             <label for="Difficulty">Difficulty:</label>
             <br>
@@ -113,8 +107,14 @@
             <label for="Notes">Notes:</label><br>
             <input type="text" id="Notes" name="Notes"><br><br>
 
+            <button type="submit" class="btn btn-primary">Submit</button>
 
-            <input type="submit" value="Submit">
+            <!-- <input type="submit" value="Submit"> -->
+            
+            <!-- {% if feedback %}
+            <p class="text-danger float-right">{{ feedback }}</p>
+            {% endif %} -->
+
           </form>
         
 
