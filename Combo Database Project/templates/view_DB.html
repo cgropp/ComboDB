@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>{% block title %}View DB{% endblock %}</title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <h1>View DB</h1>
+        <hr>
+        
+        <form action="/view_DB" method="POST">
+
+            <!-- Value dependent dropdowns
+            Reference: https://stackoverflow.com/questions/30232146/dynamically-populating-drop-down-list-from-selection-of-another-drop-down-value
+            -->
+
+            <label for="game">Select a game:</label>
+            <br>
+            <select name="gameSelected" id="gameSelected" onChange="changedrop(this.value);" required>
+              <option value="" disabled selected>Select a game</option>
+              <option value="Guilty Gear -Strive-">Guilty Gear -Strive-</option>
+              <option value="Street Fighter V">Street Fighter V</option>
+              <option value="Other">Other</option>
+          </select>
+          <br>
+          <br>
+          <label for="charSelected">Select a character:</label>
+          <br>
+          <select name="charSelected" id="charSelected" required>
+              <option value="" disabled selected>Must select a game first</option>
+          </select>
+
+
+            <script type="text/javascript">
+            var charsByCategory = {
+              "Guilty Gear -Strive-": ["Anji Mito","Axl Low","Chipp Zanuff","Faust",
+              "Giovanna","Goldlewis Dickinson","I-No","Ky Kiske","Leo Whitefang","May",
+              "Millia Rage","Nagoriyuki","Potemkin","Ramlethal Valentine","Sol Badguy","Zato-1"],
+                
+              "Street Fighter V": ["Abigail", "Akira", "Akuma", "Alex", "Balrog", "Birdie", "Blanka", "Cammy", 
+                "Chun-Li", "Cody", "Dan", "Dhalsim", "E. Honda", "Ed", "Eleven", "F.A.N.G", "Falke", "G", 
+                "Gill", "Guile", "Ibuki", "Juri", "Kage", "Karin", "Ken", "Kolin", "Laura", 
+                "Lucia", "M. Bison", "Menat", "Nash", "Necalli", "Oro", "Poison", "R. Mika", 
+                "Rashid", "Rose", "Ryu", "Sagat", "Sakura", "Seth", "Urien", "Vega", "Zangief", "Zeku"],
+              "Other": ["More games to be added soon"]
+          }
+
+    function changedrop(value) {
+        if (value.length == 0) document.getElementById("charSelected").innerHTML = "<option></option>";
+        else {
+            var catOptions = "";
+            for (categoryId in charsByCategory[value]) {
+                catOptions += "<option>" + charsByCategory[value][categoryId] + "</option>";
+            }
+            document.getElementById("charSelected").innerHTML = catOptions;
+        }
+    }
+            
+            </script>
+    <br>
+
+<button type="submit" class="btn btn-primary">View combos</button>
+<p>{{data[0]}}</p|>
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
+
+</form>

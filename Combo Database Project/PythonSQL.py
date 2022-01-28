@@ -42,11 +42,12 @@ def call_insert_combo(gameV, char_nameV, comboV, positionV, damageV, meterV, dif
 		db.close()
 		
 #Call stored procedure
-def call_select_char_combos(gameV, char_nameV) -> str:
+def call_select_char_combos(gameV, char_nameV):
 	try:
 		db = mysql.connector.connect(**dbconfig)
 		cursor = db.cursor()
-		
+		eCode = ""
+		data = []
 		args = [gameV, char_nameV]
 		
 		result = cursor.callproc('select_char_combos', args)
@@ -55,16 +56,17 @@ def call_select_char_combos(gameV, char_nameV) -> str:
 		#print(cursor[2].rowcount, "record(s) found.")
 		
 		for result in cursor.stored_results():
+			data = result.fetchall()
 			print(result.fetchall())
 		
 	except mysql.connector.Error as e:
-		return e.sqlstate
+		return e.sqlstate, data
 		print(e)
-
+	
 	finally:
 		cursor.close()
 		db.close()
-		
+		return eCode, data	
 		
 # testSelectQuery = "SELECT * FROM clients WHERE client_id > 1;"
 
