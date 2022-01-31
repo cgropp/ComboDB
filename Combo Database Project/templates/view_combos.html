@@ -5,13 +5,13 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>{% block title %}View combos{% endblock %}</title>
+    <title>{% block title %}View Combos{% endblock %}</title>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <h1>View combos</h1>
+        <h1>View DB</h1>
         <hr>
         
         <form action="/view_combos" method="POST">
@@ -67,6 +67,38 @@
 
 <button type="submit" class="btn btn-primary">View combos</button>
 
+<table id="table" class="table">
+  <thead>
+      <tr>
+        <th>Combo Index</th>
+        <th>Game Name</th>
+        <th>Character Name</th>
+        <th>Combo</th>
+        <th>Position</th>
+        <th>Damage</th>
+        <th>Meter</th>
+        <th>Difficulty</th>
+        <th>Notes</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    {% for item in data %}
+    <tr>
+      {% for ele in item%}
+        <td>{{ele}}</td>
+      {% endfor %}
+    <br>
+    </tr>
+
+    {% endfor %}
+
+
+
+
+  </tbody>
+</table>
+<br>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}

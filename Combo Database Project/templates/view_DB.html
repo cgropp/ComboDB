@@ -67,57 +67,38 @@
 
 <button type="submit" class="btn btn-primary">View combos</button>
 
-<!--- Reference: https://stackoverflow.com/questions/50283336/using-a-for-loop-to-insert-list-array-into-a-html-page-table/50283445 --->
-
 <table id="table" class="table">
   <thead>
       <tr>
-        <th>Index</th>
-          <th>Game Name</th>
-          <th>Character Name</th>
-          <th>Combo</th>
-          <th>Position</th>
-          <th>Damage</th>
-          <th>Meter</th>
-          <th>Difficulty</th>
-          <th>Notes</th>
+        <th>Combo Index</th>
+        <th>Game Name</th>
+        <th>Character Name</th>
+        <th>Combo</th>
+        <th>Position</th>
+        <th>Damage</th>
+        <th>Meter</th>
+        <th>Difficulty</th>
+        <th>Notes</th>
       </tr>
   </thead>
 
   <tbody>
-      <tr>
-          <td></td> 
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td> 
-          <td></td> 
-          <td></td> 
-      </tr>
+    {% for item in data %}
+    <tr>
+      {% for ele in item%}
+        <td>{{ele}}</td>
+      {% endfor %}
+    <br>
+    </tr>
 
-      <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-      </tr>
+    {% endfor %}
+
+
+
 
   </tbody>
 </table>
-
-<script>
-
-  </script>
-
 <br>
-{% for item in data %}
-<tr>
-    <td>{{item}}</td>
-    <br>
-    ...
-</tr>
-{% endfor %}
-
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}

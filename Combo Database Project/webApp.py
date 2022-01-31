@@ -50,6 +50,7 @@ def submit_combo():
 
 @app.route("/view_combos", methods=["GET", "POST"])
 def view_combos():
+    data = []
     if request.method == "POST":
         req = request.form
         #print(req)
@@ -58,16 +59,18 @@ def view_combos():
         
 
         if gameV != None and char_nameV != None:
-            eCode = call_select_char_combos(gameV, char_nameV)
+            eCode, data = call_select_char_combos(gameV, char_nameV)
             #TODO: Else show user error message 		
             if eCode == "45000":
                 print("DEBUG: Character has no combos")
-                flash('This character has no combos in the database.')
+                #flash('This character has no combos in the database.')
             else:
-                flash('This character has combos in the database')
-                
+                #flash('This character has combos in the database')
+                #flash(data)
+                return render_template("/view_combos.html", data=data)
         return redirect(request.url)
-    return render_template("/view_combos.html")
+    #flash(data)
+    return render_template("/view_combos.html", data=data)
 
 
 @app.route("/view_DB", methods=["GET", "POST"])
@@ -85,9 +88,9 @@ def view_DB():
             #TODO: Else show user error message 		
             if eCode == "45000":
                 print("DEBUG: Character has no combos")
-                flash('This character has no combos in the database.')
+                #flash('This character has no combos in the database.')
             else:
-                flash('This character has combos in the database')
+                #flash('This character has combos in the database')
                 #flash(data)
                 return render_template("/view_DB.html", data=data)
         return redirect(request.url)
